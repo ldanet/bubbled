@@ -19,10 +19,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ledNumber: 100,
-      maxCenters: 10,
-      newCenterProba: 0.3,
-      delay: 50,
+      ledNumber: 150,
+      maxCenters: 15,
+      newCenterProba: 0.4,
+      delay: 25,
       centers: [],
       leds: [DEFAULT_COLOR],
     }
