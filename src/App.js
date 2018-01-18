@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Strip from './strip';
 import './App.css';
+
+const dummyLeds = ['#ff0000', '#ffff00', '#00ff00',,'#00ffff','#0000ff', '#ff00ff']
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>BubbLED</h1>
+        <p>A demo for bubbling led strip</p>
+        <Strip leds={dummyLeds} />
       </div>
     );
   }
