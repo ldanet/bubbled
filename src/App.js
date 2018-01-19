@@ -43,8 +43,8 @@ class App extends Component {
       if(!neighboursTooClose) {
         newCenter = {
           pos: newCenterPos,
-          left:0,
-          right:0,
+          left: newCenterPos,
+          right: newCenterPos,
           hue: Math.round(Math.random() * 360),
         }
         centers.push(newCenter);
@@ -64,11 +64,9 @@ class App extends Component {
         }
       }, false);
       const leftBound = Math.floor((leftCenter || leftCenter === 0) ? pos - (pos - leftCenter) / 2 : 0);
-      let newLeft = left;
-      if(pos - (left - 1) <= leftBound) {
+      let newLeft = Math.max(left, leftCenter || 0);
+      if (left - 1 >= leftBound) {
         newLeft = left - 1;
-      } else if (pos - (left + 1) >= leftBound) {
-        newLeft = left + 1;
       }
  
       const rightCenter = centers.reduce((prev, curr) => {
@@ -82,19 +80,19 @@ class App extends Component {
         }
       }, false);
       const rightBound = Math.ceil(rightCenter ? pos + (rightCenter - pos) / 2 : ledNumber - 1);
-      let newRight = right;
-      if(pos + (right - 1) >= rightBound) {
-        newRight = right - 1;
-      } else if ( pos + (right + 1) <= rightBound) {
+      let newRight = Math.min(right, rightCenter || ledNumber);
+      if (right + 1 <= rightBound) {
         newRight = right + 1;
       }
+
       newCenters.push({
         pos,
         left: newLeft,
         right: newRight,
         hue,
       })
-      range(pos - newLeft, pos + newRight).forEach(i => { leds[i] = `hsl(${hue}, 100%, 50%)`; });
+
+      range(newLeft, newRight).forEach(i => { leds[i] = `hsl(${hue}, 100%, 50%)`; });
     })
 
     this.setState({ centers: newCenters, leds });
