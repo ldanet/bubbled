@@ -14,6 +14,8 @@ center: {
 const range = (start, end) =>
   Array.from(Array(end - start + 1), (_, i) => start + i);
 
+const maxMaxCenters = ledNumber => Math.round(ledNumber / 4);
+
 const DEFAULT_COLOR = 'transparent';
 
 class App extends Component {
@@ -30,6 +32,7 @@ class App extends Component {
     };
     this.calculateFrame = this.calculateFrame.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
+    this.handleMaxCentersChange = this.handleMaxCentersChange.bind(this);
   }
 
   calculateFrame() {
@@ -126,6 +129,16 @@ class App extends Component {
     this.setState({ play: !this.state.play });
   }
 
+  handleMaxCentersChange(event) {
+    const maxCenters = event.currentTarget.value;
+    const numberOfCenters = this.state.centers.length;
+    let centers = this.state.centers;
+    if (maxCenters < numberOfCenters) {
+      centers = centers.slice(numberOfCenters - maxCenters, numberOfCenters);
+    }
+    this.setState({ maxCenters, centers });
+  }
+
   render() {
     return (
       <div className="App">
@@ -135,6 +148,21 @@ class App extends Component {
         <button onClick={this.togglePlay}>
           {this.state.play ? 'Pause' : 'Play'}
         </button>
+        <div className="control">
+          <label className="control__label" htmlFor="maxCenters">
+            Max centers
+          </label>
+          <input
+            type="range"
+            className="control__input control__input"
+            id="maxCenters"
+            min={1}
+            max={maxMaxCenters(this.state.ledNumber)}
+            value={this.state.maxCenters}
+            onChange={this.handleMaxCentersChange}
+          />
+          <span className="control__display">{this.state.maxCenters}</span>
+        </div>
       </div>
     );
   }
