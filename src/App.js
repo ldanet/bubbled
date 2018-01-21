@@ -29,6 +29,7 @@ class App extends Component {
       play: false,
     };
     this.calculateFrame = this.calculateFrame.bind(this);
+    this.togglePlay = this.togglePlay.bind(this);
   }
 
   calculateFrame() {
@@ -116,12 +117,24 @@ class App extends Component {
     }
   }
 
+  togglePlay() {
+    if (this.state.play) {
+      clearInterval(this.interval);
+    } else {
+      this.interval = setInterval(this.calculateFrame, this.state.delay);
+    }
+    this.setState({ play: !this.state.play });
+  }
+
   render() {
     return (
       <div className="App">
         <h1>BubbLED</h1>
         <p>A demo for bubbling led strip</p>
         <Strip leds={this.state.leds} />
+        <button onClick={this.togglePlay}>
+          {this.state.play ? 'Pause' : 'Play'}
+        </button>
       </div>
     );
   }
