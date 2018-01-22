@@ -5,10 +5,23 @@
 .strip {
   width: 100%;
   height: 3em;
-  display:flex;
+  display: flex;
 }
 
 .strip__led {
   flex: 1 0 auto;
   height: 100%;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
 }

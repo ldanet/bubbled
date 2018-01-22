@@ -33,6 +33,7 @@ class App extends Component {
     this.calculateFrame = this.calculateFrame.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
     this.handleMaxCentersChange = this.handleMaxCentersChange.bind(this);
+    this.handleProbaChange = this.handleProbaChange.bind(this);
   }
 
   calculateFrame() {
@@ -139,29 +140,53 @@ class App extends Component {
     this.setState({ maxCenters, centers });
   }
 
+  handleProbaChange(event) {
+    this.setState({ newCenterProba: event.currentTarget.value });
+  }
+
   render() {
     return (
       <div className="App">
         <h1>BubbLED</h1>
         <p>A demo for bubbling led strip</p>
         <Strip leds={this.state.leds} />
-        <button onClick={this.togglePlay}>
-          {this.state.play ? 'Pause' : 'Play'}
-        </button>
-        <div className="control">
-          <label className="control__label" htmlFor="maxCenters">
-            Max centers
-          </label>
-          <input
-            type="range"
-            className="control__input control__input"
-            id="maxCenters"
-            min={1}
-            max={maxMaxCenters(this.state.ledNumber)}
-            value={this.state.maxCenters}
-            onChange={this.handleMaxCentersChange}
-          />
-          <span className="control__display">{this.state.maxCenters}</span>
+        <div className="controls">
+          <button onClick={this.togglePlay}>
+            {this.state.play ? 'Pause' : 'Play'}
+          </button>
+          <div className="control">
+            <label className="control__label" htmlFor="maxCenters">
+              Max centers
+            </label>
+            <input
+              type="range"
+              className="control__input control__input"
+              id="maxCenters"
+              min={1}
+              max={maxMaxCenters(this.state.ledNumber)}
+              value={this.state.maxCenters}
+              onChange={this.handleMaxCentersChange}
+            />
+            <span className="control__display">{this.state.maxCenters}</span>
+          </div>
+          <div className="control">
+            <label className="control__label" htmlFor="newCenterProba">
+              New center probability
+            </label>
+            <input
+              type="range"
+              className="control__input control__input"
+              id="newCenterProba"
+              min={0}
+              max={1}
+              step="any"
+              value={this.state.newCenterProba}
+              onChange={this.handleProbaChange}
+            />
+            <span className="control__display">
+              {this.state.newCenterProba}
+            </span>
+          </div>
         </div>
       </div>
     );
